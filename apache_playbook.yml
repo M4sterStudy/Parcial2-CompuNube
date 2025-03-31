@@ -1,0 +1,27 @@
+---
+- name: Configurar Apache en web-node
+  hosts: web
+  become: yes
+  tasks:
+    - name: Instalar Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Asegurar que Apache esté activo y habilitado
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Página de bienvenida personalizada
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <html>
+          <head><title>Bienvenido</title></head>
+          <body>
+          <h1>¡Servidor Apache configurado con Ansible!</h1>
+          </body>
+          </html>
